@@ -9,12 +9,11 @@ import 'app/styles/themes/normal.scss';
 import './app.scss';
 
 export const App = () => {
-  const { theme, toggleTheme } = useTheme();
+  const { theme } = useTheme();
 
   return (
     <div className={cn('app', {}, [theme])}>
       <Navbar />
-      <button type='button' onClick={() => toggleTheme()}>Перключить тему</button>
       <AppRouter />
     </div>
   )
