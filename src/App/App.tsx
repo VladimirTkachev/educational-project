@@ -1,3 +1,5 @@
+import { useTranslation } from 'react-i18next';
+
 import { classNames as cn } from 'shared/lib/classNames/classNames'
 import { useTheme } from "app/providers/ThemeProvider";
 import { AppRouter } from "app/providers/ThemeProvider/router";
@@ -8,17 +10,20 @@ import 'app/styles/themes/dark.scss';
 import 'app/styles/themes/normal.scss';
 
 import './app.scss';
+import { Suspense } from 'react';
 
 export const App = () => {
   const { theme } = useTheme();
 
   return (
     <div className={cn('app', {}, [theme])}>
-      <Navbar />
-      <div className='content-page'>
-        <Sidebar />
-        <AppRouter />
-      </div>
+      <Suspense fallback=''>
+        <Navbar />
+        <div className='content-page'>
+          <Sidebar />
+          <AppRouter />
+        </div>
+      </Suspense>
     </div>
   )
 }
