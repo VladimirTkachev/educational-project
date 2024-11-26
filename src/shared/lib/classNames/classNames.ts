@@ -6,4 +6,4 @@ export const classNames = (cls: string, mods: Mods = {}, additional: string[] = 
     .map(([className]) => className);
 
   return [cls, ...additional.filter(Boolean), ...modsClasses].join(' ');
-}
+};

@@ -14,7 +14,7 @@ export default (env: BuildEnv) => {
     html: path.resolve(__dirname, 'public', 'index.html'),
     src: path.resolve(__dirname, 'src'),
   };
-  
+
   const config: webpack.Configuration = buildWebpackConfig({
     mode,
     paths,
@@ -22,5 +22,5 @@ export default (env: BuildEnv) => {
     port,
   });
 
-  return config
+  return config;
 };
