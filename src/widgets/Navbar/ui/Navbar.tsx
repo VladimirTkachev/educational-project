@@ -13,11 +13,11 @@ export const Navbar: FC<NavbarProps> = (props) => {
   const { className } = props;
 
   return (
-    <div className={cn(cls['Navbar'], {}, [className])}>
-      <div className={cn(cls['links'])}>
+    <div className={cn(cls.Navbar, {}, [className])}>
+      <div className={cn(cls.links)}>
         <AppLink theme={AppLinkTheme.SECONDARY} to="/">Главная</AppLink>
         <AppLink theme={AppLinkTheme.SECONDARY} to="/about">О сайте</AppLink>
       </div>
     </div>
-  )
+  );
 };

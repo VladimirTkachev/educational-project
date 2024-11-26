@@ -1,22 +1,22 @@
-import MiniCssExtractPlugin from "mini-css-extract-plugin";
-import webpack from "webpack";
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import webpack from 'webpack';
 
 import { BuildOptions } from './types/config';
 
 export function buildLoader(options: BuildOptions): webpack.RuleSetRule[] {
-const fileLoader = {
-  test: /\.(png|jpe?g|gif|woff2|woff)$/i,
-  use: [
-    {
-      loader: 'file-loader',
-    },
-  ]
-};
+  const fileLoader = {
+    test: /\.(png|jpe?g|gif|woff2|woff)$/i,
+    use: [
+      {
+        loader: 'file-loader',
+      },
+    ],
+  };
 
-const svgLoader = {
-  test: /\.svg$/,
-  use: ['@svgr/webpack']
-};
+  const svgLoader = {
+    test: /\.svg$/,
+    use: ['@svgr/webpack'],
+  };
 
   const tsLoader = {
     test: /\.tsx?$/,
@@ -31,7 +31,7 @@ const svgLoader = {
       options.isDev ? 'style-loader' : MiniCssExtractPlugin.loader,
       // Translates CSS into CommonJS
       {
-        loader: "css-loader",
+        loader: 'css-loader',
         options: {
           modules: {
             auto: (resPath: string) => Boolean(resPath.includes('.module.')),
@@ -42,7 +42,7 @@ const svgLoader = {
         },
       },
       // Compiles Sass to CSS
-      "sass-loader",
+      'sass-loader',
     ],
   };
 
