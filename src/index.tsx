@@ -3,9 +3,9 @@ import { BrowserRouter } from 'react-router-dom';
 
 import 'shared/config/i18n/i18n';
 
-import { App } from './app/App';
-import { ErrorBoundary } from './app/providers/ErroBoundary';
-import { ThemeProvider } from './app/providers/ThemeProvider';
+import { App } from './App/App';
+import { ErrorBoundary } from './App/providers/ErroBoundary';
+import { ThemeProvider } from './App/providers/ThemeProvider';
 
 render(
   <BrowserRouter>
