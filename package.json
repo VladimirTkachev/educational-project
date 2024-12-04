@@ -15,6 +15,7 @@
     "sb": "storybook dev -p 6006 -c ./config/.storybook",
     "sb:build": "storybook build -c ./config/.storybook",
     "test:screen": "npx loki test",
+    "test:screen:ci": "loki --requireReference --reactUri file:./storybook-static",
     "test:screen:approve": "npx loki approve"
   },
   "keywords": [],
