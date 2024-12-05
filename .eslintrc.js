@@ -38,6 +38,7 @@ module.exports = {
     'react/require-default-props': 'off',
     'react/react-in-jsx-scope': 'off',
     'react/jsx-props-no-spreading': 'warn',
+    'react/jsx-max-props-per-line': ['error', { maximum: { single: 2, multi: 1 } }],
     'react/function-component-definition': 'off',
     'no-shadow': 'off',
     'import/extensions': 'off',
