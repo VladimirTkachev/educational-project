@@ -7,6 +7,8 @@ import { App } from './App/App';
 import { ErrorBoundary } from './App/providers/ErroBoundary';
 import { ThemeProvider } from './App/providers/ThemeProvider';
 
+import './App/styles/index.scss';
+
 render(
   <BrowserRouter>
     <ErrorBoundary>
