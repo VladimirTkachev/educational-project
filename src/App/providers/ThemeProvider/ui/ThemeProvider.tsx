@@ -12,14 +12,19 @@ export interface ThemeContextProps {
   onThemeChange?: (theme: Theme) => void;
 }
 
+export interface ThemeProviderProps {
+  initialTheme?: Theme;
+}
+
 export const ThemeContext = createContext<ThemeContextProps>({});
 
 export const LOCAL_STORAGE_THEME_KEY = 'theme';
 
 const defaultTheme = localStorage.getItem(LOCAL_STORAGE_THEME_KEY) as Theme ?? Theme.LIGHT;
 
-export const ThemeProvider: FC = ({ children }) => {
-  const [theme, setTheme] = useState<Theme>(defaultTheme);
+export const ThemeProvider: FC<ThemeProviderProps> = (props) => {
+  const { children, initialTheme } = props;
+  const [theme, setTheme] = useState<Theme>(initialTheme || defaultTheme);
 
   const providerValue = useMemo(() => ({
     theme,
