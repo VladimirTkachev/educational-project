@@ -33,4 +33,7 @@ export default {
     '\\.svg': path.resolve(__dirname, 'jestEmptyComponent.tsx'),
   },
   setupFilesAfterEnv: ['<rootDir>config/jest/setupTests.ts'],
+  globals: {
+    __IS_DEV__: true,
+  },
 };
