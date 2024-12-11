@@ -54,6 +54,7 @@ module.exports = {
     'jsx-a11y/no-static-element-interactions': 'off',
     semi: ['error', 'always'],
     'no-param-reassign': 'off',
+    'arrow-body-style': 'off',
   },
   globals: {
     React: true,

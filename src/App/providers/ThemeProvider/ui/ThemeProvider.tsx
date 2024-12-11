@@ -1,10 +1,10 @@
 import {
-  createContext, FC, useMemo, useState,
+  createContext, FC, useCallback, useEffect, useMemo, useState,
 } from 'react';
 
 export enum Theme {
-  LIGHT = 'light',
-  DARK = 'dark',
+  LIGHT = 'app_light_theme',
+  DARK = 'app_dark_theme',
 }
 
 export interface ThemeContextProps {
@@ -26,13 +26,19 @@ export const ThemeProvider: FC<ThemeProviderProps> = (props) => {
   const { children, initialTheme } = props;
   const [theme, setTheme] = useState<Theme>(initialTheme || defaultTheme);
 
+  useEffect(() => {
+    document.body.className = theme;
+  }, [theme]);
+
+  const handleThemeChange = useCallback((theme: Theme) => {
+    setTheme(theme);
+    localStorage.setItem(LOCAL_STORAGE_THEME_KEY, theme);
+  }, []);
+
   const providerValue = useMemo(() => ({
     theme,
-    onThemeChange: (theme: Theme) => {
-      setTheme(theme);
-      localStorage.setItem(LOCAL_STORAGE_THEME_KEY, theme);
-    },
-  }), [theme]);
+    onThemeChange: handleThemeChange,
+  }), [handleThemeChange, theme]);
 
   return (
     <ThemeContext.Provider value={providerValue}>
