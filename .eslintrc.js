@@ -40,20 +40,40 @@ module.exports = {
     'react/require-default-props': 'off',
     'react/react-in-jsx-scope': 'off',
     'react/jsx-props-no-spreading': 'warn',
-    'react/jsx-max-props-per-line': ['error', { maximum: { single: 1, multi: 1 } }],
+    'react/jsx-max-props-per-line': ['error', {
+      maximum: {
+        single: 1, multi: 1,
+      },
+    }],
     'react/function-component-definition': 'off',
     'no-shadow': 'off',
     'import/extensions': 'off',
     'import/no-extraneous-dependencies': 'off',
     'no-underscore-dangle': 'off',
     'i18next/no-literal-string': [
-      'error', { markupOnly: true, ignoreAttribute: ['to', 'data-testid'] },
+      'error', {
+        markupOnly: true, ignoreAttribute: ['to', 'data-testid'],
+      },
     ],
-    'max-len': ['error', { ignoreComments: true, code: 100 }],
+    'max-len': ['error', {
+      ignoreComments: true, code: 100,
+    }],
     'jsx-a11y/click-events-have-key-events': 'off',
     'jsx-a11y/no-static-element-interactions': 'off',
     semi: ['error', 'always'],
     'no-param-reassign': 'off',
+    // 'comma-dangle': ["error", "always"],
+    // 'object-curly-newline': ['error', {
+    //   ObjectExpression: 'always',
+    //   ObjectPattern: {
+    //     multiline: true,
+    //   },
+    //   ImportDeclaration: 'never',
+    //   ExportDeclaration: {
+    //     multiline: true, maxProperties: 2,
+    //   },
+    // }],
+    // 'object-curly-newline': ["error", { "ImportDeclaration": "always", "ExportDeclaration": "never" }]
   },
   globals: {
     React: true,
