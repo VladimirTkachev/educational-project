@@ -26,7 +26,7 @@ jobs:
         run: npm run lint:ts
         if: always()
       - name: linting style
-        run: npm run lint:ts
+        run: npm run lint:style
       - name: unit tests
         if: always()
         run: npm run test:unit
