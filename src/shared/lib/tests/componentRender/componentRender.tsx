@@ -8,7 +8,7 @@ import { StoreProvider, StateSchema } from 'App/providers/StoreProvider';
 
 interface ComponentRenderOptions {
   route?: string;
-  initialState?: StateSchema;
+  initialState?: Partial<StateSchema>;
 }
 
 export const componentRender = (components: ReactNode, options: ComponentRenderOptions = {}) => {

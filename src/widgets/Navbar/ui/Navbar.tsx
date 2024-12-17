@@ -1,9 +1,9 @@
+import { LoginModal } from 'features/AuthByUsername';
 import { FC, useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { classNames as cn } from 'shared/lib/classNames/classNames';
 import { Button, ButtonTheme } from 'shared/ui/Button/Button';
-import { Modal } from 'shared/ui/Modal/Modal';
 
 import cls from './Navbar.module.scss';
 
@@ -16,8 +16,12 @@ export const Navbar: FC<NavbarProps> = (props) => {
   const [isOpen, setIsOpen] = useState(false);
   const { t } = useTranslation();
 
-  const handleIsOpenToggle = useCallback(() => {
-    setIsOpen((prev) => !prev);
+  const handModalClose = useCallback(() => {
+    setIsOpen(false);
+  }, []);
+
+  const handModalOpen = useCallback(() => {
+    setIsOpen(true);
   }, []);
 
   return (
@@ -25,17 +29,14 @@ export const Navbar: FC<NavbarProps> = (props) => {
       <Button
         className={cn(cls.links)}
         theme={ButtonTheme.CLEAR_INVERTED}
-        onClick={handleIsOpenToggle}
+        onClick={handModalOpen}
       >
         {t('Войти')}
       </Button>
-      <Modal
+      <LoginModal
         isOpen={isOpen}
-        onClose={handleIsOpenToggle}
-      >
-        {/* eslint-disable max-len */}
-        {t('Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dicta, labore porro! Ullam veritatis distinctio magnam odit earum sapiente quas esse!')}
-      </Modal>
+        onClose={handModalClose}
+      />
     </div>
   );
 };

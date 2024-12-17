@@ -10,6 +10,7 @@ import cls from './Modal.module.scss';
 interface ModalProps {
   className?: string;
   isOpen?: boolean;
+  lazy?: boolean;
   onClose?: () => void
 }
 
@@ -17,10 +18,11 @@ const ANIMATION_DELAY = 300;
 
 export const Modal: FC<ModalProps> = (props) => {
   const {
-    className, children, isOpen, onClose,
+    className, children, isOpen, lazy, onClose,
   } = props;
 
   const [closing, setClosing] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const timerRef = useRef<ReturnType<typeof setTimeout>>(null);
   const { theme } = useTheme();
 
@@ -36,6 +38,7 @@ export const Modal: FC<ModalProps> = (props) => {
       timerRef.current = setTimeout(() => {
         onClose();
         setClosing(false);
+        setMounted(false);
       }, ANIMATION_DELAY);
     }
   }, [onClose]);
@@ -52,6 +55,12 @@ export const Modal: FC<ModalProps> = (props) => {
 
   useEffect(() => {
     if (isOpen) {
+      setMounted(true);
+    }
+  }, [isOpen]);
+
+  useEffect(() => {
+    if (isOpen) {
       window.addEventListener('keydown', handleEscPress);
     }
 
@@ -60,6 +69,10 @@ export const Modal: FC<ModalProps> = (props) => {
       window.removeEventListener('keydown', handleEscPress);
     };
   }, [handleEscPress, isOpen]);
+
+  if (lazy && !mounted) {
+    return null;
+  }
 
   return (
     <Portal>
