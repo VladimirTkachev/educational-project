@@ -10,7 +10,10 @@ import {
 import {
   RouterDecorator
 } from './../../src/shared/config/storybook/RouterDecorator/RouterDecorator';
-import { Theme}  from '../../src/App/providers/ThemeProvider';
+import {
+  StoreDecorator
+} from './../../src/shared/config/storybook/StoreDecorator/StoreDecorator';
+import { Theme }  from '../../src/App/providers/ThemeProvider';
 
 
 const preview: Preview = {
@@ -26,6 +29,7 @@ const preview: Preview = {
     StyleDecorator,
     ThemeDecorator(Theme.LIGHT),
     RouterDecorator,
+    StoreDecorator({}),
   ]
 };
 

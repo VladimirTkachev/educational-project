@@ -1,6 +1,11 @@
+import { getUserAuthData, userActions } from 'entities/User';
 import { LoginModal } from 'features/AuthByUsername';
-import { FC, useCallback, useState } from 'react';
+import {
+  FC, useCallback, useMemo, useState,
+} from 'react';
 import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
+import { USER_LOCALSTORAGE_KEY } from 'shared/const/localStorage';
 
 import { classNames as cn } from 'shared/lib/classNames/classNames';
 import { Button, ButtonTheme } from 'shared/ui/Button/Button';
@@ -14,6 +19,8 @@ interface NavbarProps {
 export const Navbar: FC<NavbarProps> = (props) => {
   const { className } = props;
   const [isOpen, setIsOpen] = useState(false);
+  const authData = useSelector(getUserAuthData);
+  const dispatch = useDispatch();
   const { t } = useTranslation();
 
   const handModalClose = useCallback(() => {
@@ -24,19 +31,46 @@ export const Navbar: FC<NavbarProps> = (props) => {
     setIsOpen(true);
   }, []);
 
+  const handleLogout = useCallback(() => {
+    localStorage.removeItem(USER_LOCALSTORAGE_KEY);
+    handModalClose();
+    dispatch(userActions.removeUserDate());
+  }, [dispatch, handModalClose]);
+
+  const Content = useMemo(() => {
+    if (authData) {
+      return (
+
+        <Button
+          className={cn(cls.links)}
+          theme={ButtonTheme.CLEAR_INVERTED}
+          onClick={handleLogout}
+        >
+          {t('Выйти')}
+        </Button>
+      );
+    }
+
+    return (
+      <>
+        <Button
+          className={cn(cls.links)}
+          theme={ButtonTheme.CLEAR_INVERTED}
+          onClick={handModalOpen}
+        >
+          {t('Войти')}
+        </Button>
+        <LoginModal
+          isOpen={isOpen}
+          onClose={handModalClose}
+        />
+      </>
+    );
+  }, [authData, handModalClose, handModalOpen, handleLogout, isOpen, t]);
+
   return (
     <div className={cn(cls.Navbar, {}, [className])}>
-      <Button
-        className={cn(cls.links)}
-        theme={ButtonTheme.CLEAR_INVERTED}
-        onClick={handModalOpen}
-      >
-        {t('Войти')}
-      </Button>
-      <LoginModal
-        isOpen={isOpen}
-        onClose={handModalClose}
-      />
+      {Content}
     </div>
   );
 };

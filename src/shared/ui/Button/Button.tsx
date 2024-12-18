@@ -33,6 +33,7 @@ export const Button: FC<ButtonProps> = (props) => {
     security,
     square,
     size = ButtonSize.M,
+    // disabled,
     ...restProps
   } = props;
 
