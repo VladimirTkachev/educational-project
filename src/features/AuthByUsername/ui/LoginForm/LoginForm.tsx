@@ -1,28 +1,40 @@
-import { FC, memo, useCallback } from 'react';
+import {
+  FC, memo, useCallback,
+} from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { classNames as cn } from 'shared/lib/classNames/classNames';
+import { ReducersList, useDynamicModuleLoader } from 'shared/lib/hooks/useDynamicModuleLoader';
 import { Button, ButtonTheme } from 'shared/ui/Button/Button';
 import { Input } from 'shared/ui/Input/Input';
 import { Text, TextTheme } from 'shared/ui/Text/Text';
 
-import { getLoginState } from '../../model/selectors/getLoginState/getLoginState';
+import {
+  getError, getIsLoading, getPassword, getUsername,
+} from '../../model/selectors/getLoginState/getLoginState';
 import { loginByUsername } from '../../model/service/loginByUsername/loginByUsername';
-import { loginActions } from '../../model/slice/loginSlice';
+import { loginActions, loginReducer } from '../../model/slice/loginSlice';
 import cls from './LoginForm.module.scss';
 
 interface LoginFormProps {
   className?: string;
 }
 
+const initialReducers: ReducersList = {
+  loginForm: loginReducer,
+};
+
 const LoginFormContaider: FC<LoginFormProps> = (props) => {
   const { className } = props;
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const {
-    password, username, error, isLoading,
-  } = useSelector(getLoginState);
+  const password = useSelector(getPassword);
+  const username = useSelector(getUsername);
+  const error = useSelector(getError);
+  const isLoading = useSelector(getIsLoading);
+
+  useDynamicModuleLoader(initialReducers, true);
 
   const handleUsernameChange = useCallback((value) => {
     dispatch(loginActions.setUsername(value));
@@ -71,5 +83,6 @@ const LoginFormContaider: FC<LoginFormProps> = (props) => {
 };
 
 export const LoginForm = memo(LoginFormContaider);
+export default LoginForm;
 
 LoginForm.displayName = 'LoginForm';
