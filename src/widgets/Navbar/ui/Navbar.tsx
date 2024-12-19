@@ -60,10 +60,12 @@ export const Navbar: FC<NavbarProps> = (props) => {
         >
           {t('Войти')}
         </Button>
-        <LoginModal
-          isOpen={isOpen}
-          onClose={handModalClose}
-        />
+        {isOpen && (
+          <LoginModal
+            isOpen={isOpen}
+            onClose={handModalClose}
+          />
+        )}
       </>
     );
   }, [authData, handModalClose, handModalOpen, handleLogout, isOpen, t]);
