@@ -2,10 +2,14 @@ import {
   FC, memo, useCallback,
 } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import { classNames as cn } from 'shared/lib/classNames/classNames';
-import { ReducersList, useDynamicModuleLoader } from 'shared/lib/hooks/useDynamicModuleLoader';
+import { useAppDispatch } from 'shared/lib/hooks/useAppDispatch/useAppDispatch';
+import {
+  ReducersList,
+  useDynamicModuleLoader,
+} from 'shared/lib/hooks/useDynamicModuleLoader/useDynamicModuleLoader';
 import { Button, ButtonTheme } from 'shared/ui/Button/Button';
 import { Input } from 'shared/ui/Input/Input';
 import { Text, TextTheme } from 'shared/ui/Text/Text';
@@ -19,6 +23,7 @@ import cls from './LoginForm.module.scss';
 
 interface LoginFormProps {
   className?: string;
+  onSuccess?: () => void;
 }
 
 const initialReducers: ReducersList = {
@@ -26,9 +31,9 @@ const initialReducers: ReducersList = {
 };
 
 const LoginFormContaider: FC<LoginFormProps> = (props) => {
-  const { className } = props;
+  const { className, onSuccess } = props;
   const { t } = useTranslation();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const password = useSelector(getPassword);
   const username = useSelector(getUsername);
   const error = useSelector(getError);
@@ -44,9 +49,13 @@ const LoginFormContaider: FC<LoginFormProps> = (props) => {
     dispatch(loginActions.setPassword(value));
   }, [dispatch]);
 
-  const hadndleSubmit = useCallback(() => {
-    dispatch(loginByUsername({ username, password }));
-  }, [dispatch, password, username]);
+  const hadndleSubmit = useCallback(async () => {
+    const result = await dispatch(loginByUsername({ username, password }));
+
+    if (result.meta.requestStatus === 'fulfilled') {
+      onSuccess?.();
+    }
+  }, [dispatch, onSuccess, password, username]);
 
   return (
     <div className={cn(cls.LoginForm, {}, [className])}>

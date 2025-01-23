@@ -2,7 +2,7 @@ import { StoreWithmanager } from 'App/providers/StoreProvider';
 import { useEffect } from 'react';
 import { useStore, useDispatch } from 'react-redux';
 import { Reducer } from '@reduxjs/toolkit';
-import { StateSchemaKyes } from '../../../App/providers/StoreProvider/config/StateSchema';
+import { StateSchemaKyes } from '../../../../App/providers/StoreProvider/config/StateSchema';
 
 export type ReducersList = {
   [key in StateSchemaKyes]?: Reducer;
@@ -26,7 +26,7 @@ export const useDynamicModuleLoader = (
     return () => {
       Object.entries(reducers).forEach(([key]: ReducerListEntry) => {
         if (canRemove) {
-          store.reducerManager.remove('loginForm');
+          store.reducerManager.remove(key);
           dispatch({ type: `@REMOVE ${key} reducer` });
         }
       });

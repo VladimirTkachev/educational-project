@@ -1,7 +1,7 @@
 import { getUserAuthData, userActions } from 'entities/User';
 import { LoginModal } from 'features/AuthByUsername';
 import {
-  FC, useCallback, useMemo, useState,
+  FC, memo, useCallback, useMemo, useState,
 } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
@@ -16,7 +16,7 @@ interface NavbarProps {
   className?: string;
 }
 
-export const Navbar: FC<NavbarProps> = (props) => {
+const NavbarContainer: FC<NavbarProps> = (props) => {
   const { className } = props;
   const [isOpen, setIsOpen] = useState(false);
   const authData = useSelector(getUserAuthData);
@@ -76,3 +76,5 @@ export const Navbar: FC<NavbarProps> = (props) => {
     </div>
   );
 };
+
+export const Navbar = memo(NavbarContainer);
