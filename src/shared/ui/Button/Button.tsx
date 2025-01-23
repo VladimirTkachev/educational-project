@@ -1,4 +1,4 @@
-import { ButtonHTMLAttributes, FC } from 'react';
+import { ButtonHTMLAttributes, FC, memo } from 'react';
 
 import { classNames as cn } from 'shared/lib/classNames/classNames';
 
@@ -25,7 +25,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   size?: ButtonSize;
 }
 
-export const Button: FC<ButtonProps> = (props) => {
+const ButtonContainer: FC<ButtonProps> = (props) => {
   const {
     className,
     theme,
@@ -51,3 +51,5 @@ export const Button: FC<ButtonProps> = (props) => {
     </button>
   );
 };
+
+export const Button = memo(ButtonContainer);
