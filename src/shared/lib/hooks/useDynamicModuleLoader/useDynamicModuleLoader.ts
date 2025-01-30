@@ -8,8 +8,6 @@ export type ReducersList = {
   [key in StateSchemaKyes]?: Reducer;
 }
 
-type ReducerListEntry = [StateSchemaKyes, Reducer];
-
 export const useDynamicModuleLoader = (
   reducers: ReducersList,
   canRemove?: boolean,
@@ -18,15 +16,15 @@ export const useDynamicModuleLoader = (
   const dispatch = useDispatch();
 
   useEffect(() => {
-    Object.entries(reducers).forEach(([key, reducer]: ReducerListEntry) => {
-      store.reducerManager.add(key, reducer);
+    Object.entries(reducers).forEach(([key, reducer]) => {
+      store.reducerManager.add(key as StateSchemaKyes, reducer);
       dispatch({ type: `@INIT ${key} reducer` });
     });
 
     return () => {
-      Object.entries(reducers).forEach(([key]: ReducerListEntry) => {
+      Object.entries(reducers).forEach(([key]) => {
         if (canRemove) {
-          store.reducerManager.remove(key);
+          store.reducerManager.remove(key as StateSchemaKyes);
           dispatch({ type: `@REMOVE ${key} reducer` });
         }
       });
