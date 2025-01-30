@@ -34,8 +34,8 @@ const LoginFormContaider: FC<LoginFormProps> = (props) => {
   const { className, onSuccess } = props;
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
-  const password = useSelector(getPassword);
-  const username = useSelector(getUsername);
+  const password = useSelector(getPassword) ?? '';
+  const username = useSelector(getUsername) ?? '';
   const error = useSelector(getError);
   const isLoading = useSelector(getIsLoading);
 

@@ -6,11 +6,11 @@ export function useTheme() {
   const { theme, onThemeChange } = useContext(ThemeContext);
 
   const toggleTheme = () => {
-    onThemeChange(theme === Theme.DARK ? Theme.LIGHT : Theme.DARK);
+    onThemeChange?.(theme === Theme.DARK ? Theme.LIGHT : Theme.DARK);
   };
 
   return {
-    theme,
+    theme: theme || Theme.LIGHT,
     toggleTheme,
   };
 }

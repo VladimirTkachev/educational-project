@@ -1,5 +1,5 @@
 import React, {
-  FC, useCallback, useEffect, useRef, useState,
+  FC, MutableRefObject, useCallback, useEffect, useRef, useState,
 } from 'react';
 import { useTheme } from 'App/providers/ThemeProvider';
 import { classNames as cn } from 'shared/lib/classNames/classNames';
@@ -23,7 +23,7 @@ export const Modal: FC<ModalProps> = (props) => {
 
   const [closing, setClosing] = useState(false);
   const [mounted, setMounted] = useState(false);
-  const timerRef = useRef<ReturnType<typeof setTimeout>>(null);
+  const timerRef = useRef() as MutableRefObject<ReturnType<typeof setTimeout>>;
   const { theme } = useTheme();
 
   const mods = {
