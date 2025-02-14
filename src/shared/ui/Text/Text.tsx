@@ -9,11 +9,18 @@ export enum TextTheme {
   ERROR = 'error',
 }
 
+export enum TextAlign {
+  RIGTH = 'right',
+  LEFT = 'left',
+  CENTER = 'center',
+}
+
 interface TextProps {
   className?: string;
   title?: string;
   text?: string;
   theme?: TextTheme;
+  align?: TextAlign;
 }
 
 const TextContainer: FC<TextProps> = (props) => {
@@ -22,10 +29,11 @@ const TextContainer: FC<TextProps> = (props) => {
     text,
     title,
     theme = TextTheme.PRIMARY,
+    align = TextAlign.LEFT,
   } = props;
 
   return (
-    <div className={cn(cls.Text, {}, [className, cls[theme]])}>
+    <div className={cn(cls.Text, {}, [className, cls[theme], cls[align]])}>
       {title && (
         <p className={cn(cls.title)}>
           {title}

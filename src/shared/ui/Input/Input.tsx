@@ -6,12 +6,13 @@ import { classNames as cn } from 'shared/lib/classNames/classNames';
 
 import cls from './Input.module.scss';
 
-type HTMLImputProps = Omit<InputHTMLAttributes<HTMLInputElement>, 'value' | 'onChange'>
+type HTMLImputProps = Omit<InputHTMLAttributes<HTMLInputElement>, 'value' | 'onChange' | 'readOnly'>
 
 interface InputProps extends HTMLImputProps {
   className?: string;
-  value?: string;
+  value?: string | number;
   autoFocus?: boolean;
+  readOnly?: boolean;
   onChange?: (value: string) => void;
 }
 
@@ -25,12 +26,15 @@ const InputComponent: FC<InputProps> = (props) => {
     type = 'text',
     placeholder,
     autoFocus,
+    readOnly,
     ...restProps
   } = props;
 
   const [focused, setFocused] = useState(false);
   const [carriage, setCarriage] = useState(0);
   const inputRef = useRef<HTMLInputElement>(null);
+
+  const hasCaret = focused && !readOnly;
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     onChange?.(e.target?.value);
@@ -60,6 +64,7 @@ const InputComponent: FC<InputProps> = (props) => {
 
   return (
     <div className={cn(cls.Input, {
+      [cls.readonly]: readOnly,
     }, [className])}
     >
       {Boolean(placeholder) && (
@@ -73,13 +78,14 @@ const InputComponent: FC<InputProps> = (props) => {
           type={type}
           className={cls.textInput}
           value={value}
+          readOnly={readOnly}
           onFocus={handleFocus}
           onBlur={handleBlur}
           onSelect={handleSelect}
           onChange={handleInputChange}
           {...restProps}
         />
-        {focused && (
+        {hasCaret && (
           <span
             className={cls.carriage}
             style={{
