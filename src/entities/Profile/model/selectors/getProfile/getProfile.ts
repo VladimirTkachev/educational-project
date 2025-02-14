@@ -6,6 +6,8 @@ export const getProfileLoading = (state: StateSchema) => getProfile(state)?.isLo
 
 export const getProfileData = (state: StateSchema) => getProfile(state)?.data;
 
+export const getProfileForm = (state: StateSchema) => getProfile(state)?.form;
+
 export const getProfileReadonly = (state: StateSchema) => getProfile(state)?.readonly;
 
 export const getProfileError = (state: StateSchema) => getProfile(state)?.error;
