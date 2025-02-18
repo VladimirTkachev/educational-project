@@ -9,4 +9,5 @@ export {
   getProfileLoading,
   getProfileReadonly,
   getProfileForm,
+  getProfileValidateErrors,
 } from './model/selectors/getProfile/getProfile';
