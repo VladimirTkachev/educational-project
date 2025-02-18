@@ -6,12 +6,14 @@ import {
   getProfileForm,
   getProfileLoading,
   getProfileReadonly,
+  getProfileValidateErrors,
   profileActions,
   ProfileCard,
   profileReducer,
 } from 'entities/Profile';
+import { ValidateProfileError } from 'entities/Profile/model/types/profile';
 
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useAppDispatch } from 'shared/lib/hooks/useAppDispatch/useAppDispatch';
@@ -19,6 +21,7 @@ import {
   ReducersList,
   useDynamicModuleLoader,
 } from 'shared/lib/hooks/useDynamicModuleLoader/useDynamicModuleLoader';
+import { Text, TextTheme } from 'shared/ui/Text/Text';
 import { ProfilePageHeader } from './ProfilePageHeader/ProfilePageHeader';
 
 const initialReducers: ReducersList = {
@@ -32,6 +35,15 @@ const ProfilePage = () => {
   const profileLoading = useSelector(getProfileLoading);
   const profileError = useSelector(getProfileError);
   const profileReadonly = useSelector(getProfileReadonly);
+  const validateErrors = useSelector(getProfileValidateErrors);
+
+  const validateErrorText = useMemo(() => ({
+    [ValidateProfileError.INCORRECT_AGE]: t('Некорректный возраст'),
+    [ValidateProfileError.INCORRECT_USER_DATA]: t('Имя и фамилия обязательны'),
+    [ValidateProfileError.INCORRECT_COUNTRY]: t('Некорректный регион'),
+    [ValidateProfileError.SERVER_ERROR]: t('Сереверная ошибка при сохранении'),
+    [ValidateProfileError.NO_DATA]: t('Данные не указаны'),
+  }), [t]);
 
   useDynamicModuleLoader(initialReducers, true);
 
@@ -71,9 +83,24 @@ const ProfilePage = () => {
     dispatch(profileActions.updateProfile({ country: value }));
   }, [dispatch]);
 
+  const ValidateErrors = useMemo(() => {
+    if (!validateErrors?.length) {
+      return null;
+    }
+
+    return validateErrors.map((err) => (
+      <Text
+        key={err}
+        theme={TextTheme.ERROR}
+        text={validateErrorText[err]}
+      />
+    ));
+  }, [validateErrorText, validateErrors]);
+
   return (
     <div>
       <ProfilePageHeader />
+      {ValidateErrors}
       <ProfileCard
         data={profileFormData}
         isLoading={profileLoading}
