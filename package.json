@@ -19,8 +19,8 @@
     "test:screen:ci": "loki --requireReference --reactUri file:./storybook-static",
     "test:screen:json": "node scripts/generate-visual-json-report.js",
     "test:screen:html": "npx reg-cli --from .loki/report.json --report .loki/report.html",
-    "test:creen:report": "npm run test:screen:json && npm run test:screen:html",
     "test:screen:approve": "npx loki approve",
+    "test:creen:report": "npm run test:screen:json && npm run test:screen:html",
     "prepare": "husky install"
   },
   "keywords": [],
