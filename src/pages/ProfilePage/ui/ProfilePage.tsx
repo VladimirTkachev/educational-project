@@ -48,7 +48,9 @@ const ProfilePage = () => {
   useDynamicModuleLoader(initialReducers, true);
 
   useEffect(() => {
-    dispatch(fetchProfileData());
+    if (__PROJECT__ !== 'storybook') {
+      dispatch(fetchProfileData());
+    }
   }, [dispatch]);
 
   const handleFirstnameChange = useCallback((value?: string) => {
